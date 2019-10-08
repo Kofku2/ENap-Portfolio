@@ -1,6 +1,13 @@
-from flask import Flask
+from flask import Flask, render_template
+from flask_assets import Environment, Bundle
+
 app = Flask(__name__)
-Scss(app, static_dir='static', asset_dir='assets')
+assets = Environment(app)
+
+assets = Environment(app)
+assets.url = app.static_url_path
+scss = Bundle('main.scss', filters='pyscss, cssmin', output='styles.css')
+assets.register('scss_main', scss)
 
 @app.route("/")
 def index():
@@ -8,3 +15,4 @@ def index():
 
 if __name__ == "__main__":
     app.run(debug=True)
+    
